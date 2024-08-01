@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.sky.ui.screens.DepartureField
 import com.example.sky.ui.theme.SkyTheme
 
 data class BottomNavItem(
@@ -101,6 +102,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     ) {
+                        DepartureField(modifier = Modifier)
 
                     }
                     /*val navController = rememberNavController()
