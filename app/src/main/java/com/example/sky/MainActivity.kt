@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -21,7 +19,6 @@ import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Send
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -34,15 +31,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.sky.models.BestOffer
 import com.example.sky.models.BottomNavItem
 import com.example.sky.models.Price
-import com.example.sky.ui.screens.DepartureField
+import com.example.sky.ui.screens.HomeScreen
+import com.example.sky.ui.screens.HotelScreen
+import com.example.sky.ui.screens.InShortScreen
+import com.example.sky.ui.screens.SubscribeScreen
+import com.example.sky.ui.screens.ProfileScreen
 import com.example.sky.ui.theme.SkyTheme
 import com.example.sky.ui.widget.OfferItem
 
@@ -53,6 +53,9 @@ fun ListBestOffer() {
         BestOffer(id = 1, title = "Die Antwoord", town = "Будапешт", price = Price(5000)),
         BestOffer(id = 2, title = "Socrat&Lera", town = "Санкт-Петербург", price = Price(1999)),
         BestOffer(id = 3, title = "Лампабикт", town = "Москва", price = Price(2390)),
+        BestOffer(id = 11, title = "Die Antwoord", town = "Будапешт", price = Price(5000)),
+        BestOffer(id = 22, title = "Socrat&Lera", town = "Санкт-Петербург", price = Price(1999)),
+        BestOffer(id = 33, title = "Лампабикт", town = "Москва", price = Price(2390)),
     )
     LazyRow {
       items(offers){offer ->
@@ -74,7 +77,7 @@ class MainActivity : ComponentActivity() {
             SkyTheme {
                 val items = listOf(
                     BottomNavItem(
-                        title = "Авиабилеты",
+                        title = "Билеты",
                         selectedIcon = Icons.Filled.Send,
                         unselectedIcon = Icons.Outlined.Send
                     ),
@@ -102,6 +105,9 @@ class MainActivity : ComponentActivity() {
                 var selectedItemIndex by rememberSaveable {
                     mutableStateOf(0)
                 }
+
+                val navController = rememberNavController()
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -113,8 +119,17 @@ class MainActivity : ComponentActivity() {
                                 items.forEachIndexed { index, item ->
                                     NavigationBarItem(
                                         selected = selectedItemIndex == index,
-                                        onClick = { selectedItemIndex = index },
-                                        label = { Text(text = item.title)},
+                                        onClick = {
+                                            selectedItemIndex = index
+                                            when (index) {
+                                                0 -> navController.navigate("screenA")
+                                                1 -> navController.navigate("screenB")
+                                                2 -> navController.navigate("screenC")
+                                                3 -> navController.navigate("screenD")
+                                                4 -> navController.navigate("screenE")
+                                            }
+                                        },
+                                        label = { Text(text = item.title) },
                                         icon = {
                                             Icon(
                                                 imageVector = if (selectedItemIndex == index)
@@ -127,58 +142,34 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
-                    ) {
-                        Column {
-                            Text(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth()
-                                    .align(Alignment.CenterHorizontally),
-                                text = "Поиск дешевых\nавиабилетов",
-                                fontSize = 22.sp,
-                                textAlign = TextAlign.Center,
-                                maxLines = 2
-                            )
-                            DepartureField(modifier = Modifier)
-                            Text(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth()
-                                    .align(Alignment.CenterHorizontally),
-                                text = "Музыкально отлететь",
-                                fontSize = 22.sp,
-                                maxLines = 1
-                            )
-                            ListBestOffer()
-                            Button(
-                                modifier = Modifier
-                                    .padding(16.dp)
-                                    .fillMaxWidth()
-                                    .align(Alignment.CenterHorizontally),
-                                onClick = { /*TODO*/ }) {
-                                Text(text = "Показать все места")
+                    ) { paddingValues ->
+                        NavHost(
+                            navController = navController,
+                            startDestination = "screenA",
+                            modifier = Modifier.padding(paddingValues)
+                        ) {
+                            composable("screenA") {
+                                HomeScreen(onClick = {
+                                    navController.navigate(
+                                        "screenB"
+                                    )
+                                })
+                            }
+                            composable("screenB") {
+                                HotelScreen(onClick = { navController.navigate("screenA") })
+                            }
+                            composable("screenC") {
+                                InShortScreen()
+                            }
+                            composable("screenD") {
+                                SubscribeScreen()
+                            }
+                            composable("screenE") {
+                                ProfileScreen()
                             }
                         }
+
                     }
-                    /*val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = ScreenA
-                    ){
-                        composable<ScreenA> {
-                            HomeScreen(onClick = {navController.navigate(ScreenB(
-                                name = null,
-                                age = 25
-                            ))})
-                        }
-
-                        composable<ScreenB>{
-                            val args = it.toRoute<ScreenB>()
-                            NextScreen(args.name, args.age)
-                        }
-                    }*/
-
-
                 }
             }
         }

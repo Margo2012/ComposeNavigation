@@ -10,3 +10,12 @@ data class ScreenB(
     val name: String?,
     val age: Int
 )
+
+@Serializable
+object ScreenC
+
+@Serializable
+object ScreenD
+
+@Serializable
+object ScreenE
