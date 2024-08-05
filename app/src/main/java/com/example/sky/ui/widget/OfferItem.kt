@@ -34,3 +34,4 @@ fun OfferItem(offer: BestOffer, image: Painter?) {
 private fun formatPrice(price: Int): String {
     return "%,d".format(price).replace(",", " ")
 }
+

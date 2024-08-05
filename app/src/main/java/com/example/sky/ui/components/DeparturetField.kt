@@ -1,4 +1,4 @@
-package com.example.sky.ui.screens
+package com.example.sky.ui.components
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -25,7 +25,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DepartureField(modifier: Modifier = Modifier) {
+fun DepartureField(
+    modifier: Modifier = Modifier
+) {
     var textFrom by remember { mutableStateOf("Москва") }
     var textTo by remember { mutableStateOf(textFrom) }
 

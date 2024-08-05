@@ -9,15 +9,41 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sky.ListBestOffer
+import com.example.sky.ui.components.DepartureField
+import com.example.sky.ui.components.ListBestOffer
+import com.example.sky.ui.dialogs.ComplexRouteDialog
+import com.example.sky.ui.dialogs.HotTicketsDialog
+import com.example.sky.ui.dialogs.WeekendsDialog
+
 
 @Composable
 fun HomeScreen(onClick: () -> Unit = {}){
+    var showComplexRouteDialog by remember { mutableStateOf(false) }
+    var showWeekendsDialog by remember { mutableStateOf(false) }
+    var showHotTicketsDialog by remember { mutableStateOf(false) }
+    var destinationFieldText by remember { mutableStateOf("") }
+
+    if (showComplexRouteDialog) {
+        ComplexRouteDialog(onDismiss = { showComplexRouteDialog = false })
+    }
+
+    if (showWeekendsDialog) {
+        WeekendsDialog(onDismiss = { showWeekendsDialog = false })
+    }
+
+    if (showHotTicketsDialog) {
+        HotTicketsDialog(onDismiss = { showHotTicketsDialog = false })
+    }
+
     Column {
         Text(
             modifier = Modifier
@@ -43,11 +69,11 @@ fun HomeScreen(onClick: () -> Unit = {}){
         Button(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally),
-            onClick = { /*TODO*/ }) {
-                Text(text = "Показать все места")
-            }
+                .fillMaxWidth(),
+            onClick = onClick
+        ) {
+            Text(text = "Показать все места")
+        }
     }
 }
 
