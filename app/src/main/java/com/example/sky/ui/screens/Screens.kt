@@ -1,5 +1,6 @@
 package com.example.sky.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,9 +16,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.sky.R
 import com.example.sky.ui.components.DepartureField
 import com.example.sky.ui.components.ListBestOffer
 import com.example.sky.ui.dialogs.ComplexRouteDialog
@@ -26,7 +29,7 @@ import com.example.sky.ui.dialogs.WeekendsDialog
 
 
 @Composable
-fun HomeScreen(onClick: () -> Unit = {}){
+fun HomeScreen(onClick: () -> Unit = {}) {
     var showComplexRouteDialog by remember { mutableStateOf(false) }
     var showWeekendsDialog by remember { mutableStateOf(false) }
     var showHotTicketsDialog by remember { mutableStateOf(false) }
@@ -74,11 +77,18 @@ fun HomeScreen(onClick: () -> Unit = {}){
         ) {
             Text(text = "Показать все места")
         }
+
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(R.drawable.ic_socrat),
+            contentDescription = null,
+        )
+
     }
 }
 
 @Composable
-fun NextScreen(name: String?, age: Int){
+fun NextScreen(name: String?, age: Int) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -87,7 +97,6 @@ fun NextScreen(name: String?, age: Int){
         Text(text = "$name, $age years old")
     }
 }
-
 
 
 @Composable

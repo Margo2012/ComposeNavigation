@@ -3,6 +3,8 @@ package com.example.sky.ui.components
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
+import com.example.sky.R
 import com.example.sky.models.BestOffer
 import com.example.sky.models.Price
 import com.example.sky.ui.widget.OfferItem
@@ -19,12 +21,14 @@ fun ListBestOffer() {
     )
     LazyRow {
         items(offers){offer ->
-            /*val image = when (offer.id) {
-                1 -> painterResource(R.drawable.image1)  // Replace with your actual resource IDs
-                2 -> painterResource(R.drawable.image2)
-                else -> painterResource(R.drawable.image3)
-            }*/
-            OfferItem(offer = offer, image = null)
+            val image = when (offer.id) {
+                1  -> painterResource(R.drawable.ic_budapesht)  // Replace with your actual resource IDs
+                11  -> painterResource(R.drawable.ic_budapesht)  // Replace with your actual resource IDs
+                2 -> painterResource(R.drawable.ic_socrat)
+                22 -> painterResource(R.drawable.ic_socrat)
+                else -> painterResource(R.drawable.ic_lampabict)
+            }
+            OfferItem(offer = offer, image = image)
         }
     }
 }
