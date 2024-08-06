@@ -22,11 +22,11 @@ fun ListBestOffer() {
     LazyRow {
         items(offers){offer ->
             val image = when (offer.id) {
-                1  -> painterResource(R.drawable.ic_budapesht)  // Replace with your actual resource IDs
-                11  -> painterResource(R.drawable.ic_budapesht)  // Replace with your actual resource IDs
-                2 -> painterResource(R.drawable.ic_socrat)
-                22 -> painterResource(R.drawable.ic_socrat)
-                else -> painterResource(R.drawable.ic_lampabict)
+                1  -> painterResource(R.drawable.ic_first)  // Replace with your actual resource IDs
+                11  -> painterResource(R.drawable.ic_first)  // Replace with your actual resource IDs
+                2 -> painterResource(R.drawable.ic_second)
+                22 -> painterResource(R.drawable.ic_second)
+                else -> painterResource(R.drawable.ic_third)
             }
             OfferItem(offer = offer, image = image)
         }
